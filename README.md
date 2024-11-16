@@ -77,3 +77,37 @@ Input (Grayscale) [1×150×150]
     v
 Output (Colored) [3×150×150]
 ```
+### Key Features
+
+#### 1. Skip Connections
+
+Direct connections between encoder and decoder layers
+Helps preserve spatial information
+Improves gradient flow during training
+Enables better reconstruction of fine details
+
+
+#### 2. Activation Functions
+
+ReLU: Used throughout the network for non-linearity
+Sigmoid: Final layer for normalizing output to [0,1] range
+
+
+#### 3. Stride and Padding
+
+Strided convolutions for downsampling
+output_padding in decoder to match encoder dimensions
+Proper padding to maintain spatial relationships
+
+#### 4. Channel Progression
+
+Encoder: 1 → 64 → 128 → 256 → 512 channels
+Decoder: 512 → 256 → 128 → 64 → 3 channels
+Gradually captures more complex features
+
+### The architecture is designed to effectively:
+
+* Extract meaningful features from grayscale images
+* Learn color relationships and patterns
+* Preserve spatial information through skip connections
+* Generate realistic colorization while maintaining structural integrity
