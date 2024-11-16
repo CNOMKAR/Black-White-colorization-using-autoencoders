@@ -30,8 +30,7 @@ drive/landscape Images/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/image-colorization.git
-cd image-colorization
+git clone https://github.com/CNOMKAR/Black-White-colorization-using-autoencoders.git
 ```
 
 2. Create and activate a virtual environment:
@@ -43,4 +42,38 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 3. Install required packages:
 ```bash
 pip install -r requirements.txt
+```
+## 🏗️ Model Architecture
+
+The project implements a U-Net style autoencoder architecture for image colorization, utilizing skip connections to preserve spatial information and enhance color reconstruction quality.
+
+### Network Overview
+
+```
+Input (Grayscale) [1×150×150]
+    │
+    v
+[Encoder Path]
+    │
+    ├── Conv2d(1→64) + ReLU    [74×74]  ──────────────┐
+    │                                                  │
+    ├── Conv2d(64→128) + ReLU   [37×37]  ─────────┐   │
+    │                                              │   │
+    ├── Conv2d(128→256) + ReLU  [19×19]  ───┐     │   │
+    │                                       │     │   │
+    └── Conv2d(256→512) + ReLU  [10×10]    │     │   │
+                                           │     │   │
+                                           v     v   v
+[Decoder Path]                        Skip Connections
+    │                                           │     │   │
+    ├── ConvTranspose2d(512→256) + ReLU ←──────┘     │   │
+    │                                                 │   │
+    ├── ConvTranspose2d(512→128) + ReLU ←────────────┘   │
+    │                                                     │
+    ├── ConvTranspose2d(256→64) + ReLU  ←────────────────┘
+    │
+    └── ConvTranspose2d(128→3) + Sigmoid
+    │
+    v
+Output (Colored) [3×150×150]
 ```
